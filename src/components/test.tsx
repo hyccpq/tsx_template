@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Button as MyButton } from 'antd'
 
 export interface NewProps {
     compiler: string;
@@ -8,7 +9,11 @@ export interface NewProps {
 export default class Test extends React.Component<NewProps> {
     render() {
         return (
-            <h1>Hello from { this.props.compiler } and { this.props.framework }!</h1>
+            <div>
+                <h1>Hello from { this.props.compiler } and { this.props.framework }!</h1>
+                <MyButton>我的</MyButton>
+            </div>
+
         )
     }
 }

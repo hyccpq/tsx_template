@@ -31,10 +31,31 @@ module.exports = {
     module: {
         rules: [
             // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
-            { test: /\.tsx?$/, loader: "awesome-typescript-loader" },
+            {
+            	test: /\.(tsx|ts)?$/,
+	            use: [
+	            // 	{
+		         //    loader: "react-hot-loader/webpack"
+	            // },
+	            {
+		            loader: "babel-loader"
+	            },{
+		            loader: "awesome-typescript-loader"
+	            }]
+	
+            },
 
             // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
-            { enforce: "pre", test: /\.js$/, loader: "source-map-loader" },
+	        {
+		        enforce: "pre",
+		        test: /\.js$/,
+		        use: [{
+			        loader: "source-map-loader"
+		        },{
+			        loader: "babel-loader"
+		        }]
+	           
+            },
 	        
 	        {
 				test: /\.less$/,
@@ -51,7 +72,7 @@ module.exports = {
 				]
 			},
 			{
-				test: /\.(scss|css)$/,
+				test: /\.css$/,
 				use: [
 					MiniCssExtractPlugin.loader,
 					{
@@ -59,12 +80,13 @@ module.exports = {
 					},
 					{
 						loader: 'css-loader'
-					},
-					{
-						loader: 'sass-loader'
 					}
 				]
-			}
+			},
+	        {
+                test: /\.(png|jpg|jpeg|gif|svg)$/,
+                loader: 'url-loader?limit=8192&name=[name].[ext]&publicPath='
+            }
         ]
     },
 

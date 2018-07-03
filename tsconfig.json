@@ -1,13 +1,37 @@
+//{
+//    "compilerOptions": {
+//        "outDir": "./dist/",
+//        "sourceMap": true,
+//        "noImplicitAny": true,
+//        "lib": ["es6", "dom"],
+//        "allowJs": true,
+//        "module": "commonjs",
+//        "target": "es5",
+//        "jsx": "react"
+//    },
+//    "include": [
+//        "./src/**/*"
+//    ]
+//}
+
 {
     "compilerOptions": {
         "outDir": "./dist/",
-        "sourceMap": true,
-        "noImplicitAny": true,
-        "lib": ["es6", "dom"],
-        "allowJs": true,
-        "module": "commonjs",
+        "sourceMap": false,
+        "noImplicitAny": false,
+        "module": "es6",
         "target": "es5",
-        "jsx": "react"
+        "jsx": "preserve",
+        "moduleResolution": "node",
+        "forceConsistentCasingInFileNames": false,
+        "allowJs": true,
+        "allowSyntheticDefaultImports": true,
+        "lib": [
+            "es5",
+            "dom",
+            "dom.iterable",
+            "es2015"
+        ]
     },
     "include": [
         "./src/**/*"
