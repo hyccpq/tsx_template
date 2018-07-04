@@ -1,7 +1,13 @@
+'use strict'
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HappyPack = require('happypack');
+const os = require('os');
+const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length - 1 });
+console.log(os.cpus().length);
+// const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 
 /*
  * We've enabled UglifyJSPlugin for you! This minifies your app
@@ -14,14 +20,14 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
-    entry: "./src/index.tsx",
+    entry: path.resolve(__dirname, "../src/index.tsx"),
     output: {
         filename: "bundle.js",
-        path: path.resolve(__dirname, "/dist")
+        path: path.resolve(__dirname, "../dist")
     },
 
     // Enable sourcemaps for debugging webpack's output.
-    devtool: "source-map",
+    // devtool: "source-map",
 
     resolve: {
         // Add '.ts' and '.tsx' as resolvable extensions.
@@ -34,11 +40,11 @@ module.exports = {
             {
             	test: /\.(tsx|ts)?$/,
 	            use: [
-	            // 	{
-		         //    loader: "react-hot-loader/webpack"
+	            	// {
+		            // loader: "react-hot-loader/webpack"
 	            // },
 	            {
-		            loader: "babel-loader"
+		            loader: "happypack/loader?id=babel"
 	            },{
 		            loader: "awesome-typescript-loader"
 	            }]
@@ -52,7 +58,7 @@ module.exports = {
 		        use: [{
 			        loader: "source-map-loader"
 		        },{
-			        loader: "babel-loader"
+			        loader: "happypack/loader?id=babel"
 		        }]
 	           
             },
@@ -61,26 +67,20 @@ module.exports = {
 				test: /\.less$/,
 				use: [
 					MiniCssExtractPlugin.loader,
-					'css-loader',
-					{
-						loader: 'less-loader',
-						options: {
-							sourceMap: true,
-							javascriptEnabled: true
-						}
-					}
+					'happypack/loader?id=less'
 				]
 			},
 			{
 				test: /\.css$/,
 				use: [
 					MiniCssExtractPlugin.loader,
-					{
-						loader: 'style-loader'
-					},
-					{
-						loader: 'css-loader'
-					}
+					'happypack/loader?id=css',
+					// {
+					// 	loader: 'style-loader'
+					// },
+					// {
+					// 	loader: 'css-loader'
+					// }
 				]
 			},
 	        {
@@ -99,13 +99,46 @@ module.exports = {
     //     "react-dom": "ReactDOM"
     // },
 	plugins: [
+		new HappyPack({
+			// 用唯一的标识符 id 来代表当前的 HappyPack 是用来处理一类特定的文件
+			id: 'babel',
+			// 如何处理 .js 文件，用法和 Loader 配置中一样
+			loaders: ['babel-loader?cacheDirectory'],
+			// 使用共享进程池中的子进程去处理任务
+			threadPool: happyThreadPool,
+		}),
+		new HappyPack({
+			id: 'less',
+			// 如何处理 .css 文件，用法和 Loader 配置中一样
+			loaders: [
+				'css-loader',
+					{
+						loader: 'less-loader',
+						options: {
+							sourceMap: true,
+							javascriptEnabled: true
+						}
+					}
+			],
+			// 使用共享进程池中的子进程去处理任务
+			threadPool: happyThreadPool,
+		}),
+		new HappyPack({
+			id: 'css',
+			// 如何处理 .css 文件，用法和 Loader 配置中一样
+			loaders: ['css-loader'],
+			// 使用共享进程池中的子进程去处理任务
+			threadPool: happyThreadPool,
+		}),
 		new UglifyJSPlugin(),
 		new HtmlWebpackPlugin({
-			template: './src/index.html'
+			template: './src/index.html',
+			alwaysWriteToDist: true
 		}),
 		new MiniCssExtractPlugin({
 			filename: '[name].[hash:8].css',
 			chunkFilename: '[id].[hash:8].css'
-		})
+		}),
+		
 	]
 };
