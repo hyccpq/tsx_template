@@ -6,7 +6,7 @@
   "author": "hyccpq <hyccpq@hotmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "webpack-dev-server --config build/webpack.config.dev.js --open --progress --display-modules"
+    "dev": "webpack-dev-server --config build/webpack.config.dev.js --open --progress"
   },
   "devDependencies": {
     "awesome-typescript-loader": "^5.2.0",

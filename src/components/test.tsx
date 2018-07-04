@@ -12,6 +12,10 @@ export default class Test extends React.Component<NewProps> {
             <div>
                 <h1>Hello from { this.props.compiler } and { this.props.framework }!</h1>
                 <MyButton>我的</MyButton>
+                真是牛逼哈哈哈
+                <div>草拟吗，牛逼？？？</div>
+                <div className="ui">呵呵</div>
+
             </div>
 
         )

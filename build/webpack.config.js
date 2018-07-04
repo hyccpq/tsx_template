@@ -17,7 +17,7 @@ console.log(os.cpus().length);
  *
  */
 
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+// const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
     entry: path.resolve(__dirname, "../src/index.tsx"),
@@ -130,7 +130,7 @@ module.exports = {
 			// 使用共享进程池中的子进程去处理任务
 			threadPool: happyThreadPool,
 		}),
-		new UglifyJSPlugin(),
+		// new UglifyJSPlugin(),
 		new HtmlWebpackPlugin({
 			template: './src/index.html',
 			alwaysWriteToDist: true
