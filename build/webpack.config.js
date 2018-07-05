@@ -9,20 +9,11 @@ const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length - 1 });
 console.log(os.cpus().length);
 // const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 
-/*
- * We've enabled UglifyJSPlugin for you! This minifies your app
- * in order to load faster and run less javascript.
- *
- * https://github.com/webpack-contrib/uglifyjs-webpack-plugin
- *
- */
-
-// const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
     entry: path.resolve(__dirname, "../src/index.tsx"),
     output: {
-        filename: "bundle.js",
+        filename: "[name].bundle.js",
         path: path.resolve(__dirname, "../dist")
     },
 
@@ -112,6 +103,7 @@ module.exports = {
 			// 如何处理 .css 文件，用法和 Loader 配置中一样
 			loaders: [
 				'css-loader',
+				'postcss-loader',
 					{
 						loader: 'less-loader',
 						options: {
@@ -126,14 +118,12 @@ module.exports = {
 		new HappyPack({
 			id: 'css',
 			// 如何处理 .css 文件，用法和 Loader 配置中一样
-			loaders: ['css-loader'],
+			loaders: ['css-loader', 'postcss-loader'],
 			// 使用共享进程池中的子进程去处理任务
 			threadPool: happyThreadPool,
 		}),
-		// new UglifyJSPlugin(),
 		new HtmlWebpackPlugin({
 			template: './src/index.html',
-			alwaysWriteToDist: true
 		}),
 		new MiniCssExtractPlugin({
 			filename: '[name].[hash:8].css',

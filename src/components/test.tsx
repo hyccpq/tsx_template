@@ -7,6 +7,9 @@ export interface NewProps {
 }
 
 export default class Test extends React.Component<NewProps> {
+    constructor (props: NewProps) {
+        super(props);
+    }
     render() {
         return (
             <div>
