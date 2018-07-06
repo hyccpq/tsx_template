@@ -1,10 +1,12 @@
 
-interface Counter {
-    (state: object, action: object): object
-}
+// interface Counter<T> {
+//     (state?: T, action?: object): T
+// }
 
-const counter: Counter = (state = {}, action = {}) => {
+const counter: <T>(T, object) => T = (state = 0, action = {}) => {
     switch (action.type){
+        case "INCREMENT":
+            return state + 1;
         default: return state;
     }
 }
