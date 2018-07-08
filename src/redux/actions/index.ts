@@ -1,18 +1,23 @@
-import { INCREMENT, DECREMENT } from '../constans/index';
+import * as contents from '../constans';
 
-export interface Action {
-	type: string;
-	payload?: any;
+export interface Increment {
+	type: contents.INCREMENT
 }
 
-export const increment = (): Action => {
+export interface Decrement {
+	type: contents.DECREMENT
+}
+
+export type EnthusiasmAction = Increment | Decrement;
+
+export const increment = ():Increment => {
 	return {
-		type: INCREMENT
+		type: contents.INCREMENT
 	};
 };
 
-export const decrement = (): Action => {
+export const decrement = ():Decrement => {
 	return {
-		type: DECREMENT
+		type: contents.DECREMENT
 	};
 };

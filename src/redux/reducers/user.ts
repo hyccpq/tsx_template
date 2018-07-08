@@ -1,6 +1,7 @@
-import { Reducers } from "../types";
+import { Reducer } from "redux";
+import { EnthusiasmAction } from "../actions";
 
-const user: Reducers<string> = (state = 'kalec', action) => {
+const user: Reducer<string> = (state = 'kalec', action:EnthusiasmAction) => {
 	switch (action.type) {
 		
 		default:

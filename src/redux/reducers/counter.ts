@@ -1,6 +1,7 @@
-import { Reducers } from '../types';
+import { Reducer } from 'redux';
+import { EnthusiasmAction } from '../actions';
 
-const counter: Reducers<number> = (state = 0, action) => {
+const counter: Reducer<number> = (state = 0, action:EnthusiasmAction) => {
 	switch (action.type) {
 		case 'INCREMENT':
 			return state + 1;

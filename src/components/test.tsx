@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { Button as MyButton, InputNumber } from 'antd'
-import { connect, DispatchProp } from 'react-redux';
-import { AnyAction } from '../../node_modules/redux';
-import { increment, decrement } from '../redux/actions';
+import { connect } from 'react-redux';
+import { increment, decrement, EnthusiasmAction } from '../redux/actions';
+import { AppState } from '../redux';
+import { Dispatch } from 'redux';
 
-export interface NewProps extends ReduxProps {
+export interface NewProps {
     compiler: string;
     framework: string;
 }
@@ -16,7 +17,9 @@ export interface ReduxProps {
     onDecrement: () => void;
 }
 
-class Test extends React.Component<NewProps, {}> {
+type AllProps = NewProps & ReduxProps
+
+class App extends React.Component<AllProps, {}> {
 
     render() {
         const { compiler, framework, count, user, onDecrement, onIncrement } = this.props
@@ -39,18 +42,18 @@ class Test extends React.Component<NewProps, {}> {
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: AppState): {} => {
     return {
         count: state.counter,
         user: state.user
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch:Dispatch<EnthusiasmAction>): {} => {
     return {
         onIncrement: () => dispatch(increment()),
         onDecrement: () => dispatch(decrement())
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Test)
+export default connect(mapStateToProps, mapDispatchToProps)(App as React.ComponentType<NewProps>)
